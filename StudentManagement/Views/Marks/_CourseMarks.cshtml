@@ -1,0 +1,29 @@
+﻿@model IEnumerable<Course>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Subject Name</th>
+            <th>Assignment Marks</th>
+            <th>Test Marks</th>
+        </tr>
+    </thead>
+    <tbody>
+        @{
+            int index = 0; // Initialize an index counter
+        }
+        @foreach (var course in Model)
+        {
+            <tr>
+                <td>@course.CourseName</td>
+                <td>
+                    @Html.TextBox($"Marks[{index}].Assignment1", null, new { @class = "form-control" }) <!-- Update to use a generic TextBox -->
+                </td>
+                <td>
+                    @Html.TextBox($"Marks[{index}].Score", null, new { @class = "form-control" }) <!-- Update to use a generic TextBox -->
+                </td>
+            </tr>
+            index++; // Increment the index counter
+        }
+    </tbody>
+</table>

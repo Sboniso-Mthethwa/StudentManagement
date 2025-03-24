@@ -1,0 +1,90 @@
+﻿@model Student
+
+@{
+    ViewBag.Title = "Alter Student Information";
+}
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    
+<div class="form-horizontal">
+    <h4 class="center-heading" style="text-align: center; font-family: 'Times New Roman', Times, serif; color: 000000; font-size: 35px; ">Edit Student Details</h4>
+    <hr />
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    @Html.HiddenFor(model => model.StudentId)
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.IdNumber)
+        <div class="col-md-10">
+            @Html.TextBoxFor(model => model.IdNumber, new { @class = "form-control", @readonly = "readonly" }) @* Make ID Number read-only*@
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.Email, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+            @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.PhoneNumber, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.PhoneNumber, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.PhoneNumber, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <!-- Read-only display for selected stream -->
+    <div class="form-group">
+        @Html.Label("Selected Stream", new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            <p class="form-control-static">@Model.SelectedStream</p>
+        </div>
+    </div>
+
+    <!-- Read-only display for registered courses -->
+    <div class="form-group">
+        @Html.Label("Registered Courses", new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            <ul>
+                @foreach (var course in ViewBag.RegisteredCourses as List<string>)
+                {
+                    <li>@course</li>
+                }
+            </ul>
+        </div>
+    </div>
+
+
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" value="Save" class="btn btn-default" />
+        </div>
+    </div>
+</div>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
+<style>
+    .center-heading {
+        text-align: center; /* Centers the text */
+        margin-bottom: 20px; /* Adds space between heading and buttons */
+    }
+</style>

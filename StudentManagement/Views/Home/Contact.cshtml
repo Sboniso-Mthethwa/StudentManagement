@@ -1,0 +1,102 @@
+﻿@{
+    ViewBag.Title = "Contact Us";
+    ViewBag.Message = "We'd love to hear from you!";
+}
+<main aria-labelledby="title" class="contact-page">
+    <section class="contact-header">
+        <h2 id="title">@ViewBag.Title</h2>
+        <h3>@ViewBag.Message</h3>
+        <p>If you have any questions, suggestions, or need assistance, please feel free to reach out to us through the following contact information.</p>
+    </section>
+
+    <section class="contact-info">
+        <h4>Our Office</h4>
+        <address>
+            XYZ School<br />
+            123 Education Road<br />
+            Learning City, 12345<br />
+            <abbr title="Phone">P:</abbr> (012) 345-6789
+        </address>
+    </section>
+
+    <section class="email-contacts">
+        <h4>Email Contacts</h4>
+        <p><strong>Support:</strong> <a href="mailto:support@xyzschool.edu">support@xyzschool.edu</a></p>
+        <p><strong>Admissions:</strong> <a href="mailto:admissions@xyzschool.edu">admissions@xyzschool.edu</a></p>
+        <p><strong>Marketing:</strong> <a href="mailto:marketing@xyzschool.edu">marketing@xyzschool.edu</a></p>
+    </section>
+
+    <section class="contact-form">
+        <h4>Send Us a Message</h4>
+        <form method="post" action="/Contact/SendMessage">
+            <div class="form-group">
+                <label for="name">Your Name</label>
+                <input type="text" id="name" name="name" class="form-control" required />
+            </div>
+            <div class="form-group">
+                <label for="email">Your Email</label>
+                <input type="email" id="email" name="email" class="form-control" required />
+            </div>
+            <div class="form-group">
+                <label for="message">Your Message</label>
+                <textarea id="message" name="message" class="form-control" rows="5" required></textarea>
+            </div>
+            <button type="submit" class="btn-submit">Send Message</button>
+        </form>
+    </section>
+</main>
+
+<style>
+    .contact-page {
+        font-family: Arial, sans-serif;
+        margin: 20px;
+    }
+
+        .contact-page h2, .contact-page h3 {
+            color: #2c3e50;
+        }
+
+        .contact-page h4 {
+            color: #2980b9;
+            margin-top: 20px;
+        }
+
+        .contact-page p, .contact-page address {
+            line-height: 1.6;
+        }
+
+    .contact-info, .email-contacts, .contact-form {
+        margin-top: 20px;
+    }
+
+    .form-group {
+        margin-bottom: 15px;
+    }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+    .form-control {
+        width: 100%;
+        padding: 8px;
+        box-sizing: border-box;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+    }
+
+    .btn-submit {
+        padding: 10px 20px;
+        background-color: #2980b9;
+        color: #fff;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+    }
+
+        .btn-submit:hover {
+            background-color: #1f5f87;
+        }
+</style>

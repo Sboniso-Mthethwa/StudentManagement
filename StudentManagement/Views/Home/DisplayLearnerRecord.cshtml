@@ -1,0 +1,111 @@
+﻿@model IEnumerable<Mark>
+@{
+    ViewBag.Title = "Learner Record";
+    var student = ViewBag.Student as Student; // Get the student information
+}
+
+<h2 class="center-heading" style="text-align: center; font-family: 'Times New Roman', Times, serif; color:black; font-size: 35px;">My report Record</h2>
+<!-- Displaying Student Information -->
+@if (student != null)
+{
+    <div>
+        <h3>Student Information</h3>
+        <p><strong>Name:</strong> @student.Name</p>
+        <p><strong>ID Number:</strong> @student.IdNumber</p>
+        <p><strong>Email:</strong> @student.Email</p>
+        <p><strong>Phone Number:</strong> @student.PhoneNumber</p>
+    </div>
+
+    <!-- Displaying Student Courses and Marks -->
+    <div>
+        <h3>Subject and Marks</h3>
+        <table class="table" id="marksTable">
+            <thead>
+                <tr>
+                    <th>Subject Name</th>
+                    <th>Assignment Marks</th>
+                    <th>Exam Mark</th>
+                    <th>Total Marks (20% Assignment + 80% Exam)</th>
+                    <th>Status (Pass/Fail)</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var mark in Model)
+                {
+                    var totalMarks = (mark.Assignment1 * 0.20) + (mark.Score * 0.80);
+                    var status = totalMarks >= 50 ? "Pass" : "Fail";
+                    <tr>
+                        <td>@Html.DisplayFor(m => mark.Course.CourseName)</td>
+                        <td class="assignment-marks">@Html.DisplayFor(m => mark.Assignment1)</td>
+                        <td class="exam-marks">@Html.DisplayFor(m => mark.Score)</td>
+                        <td class="total-marks">@totalMarks.ToString("F2")</td>
+                        <td class="status">@status</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+        <!-- Display student's average score and pass/fail status -->
+        <div class="student-summary">
+            <p><strong>Average Score:</strong> @ViewBag.AverageScore</p>
+            <p><strong>Status:</strong> @ViewBag.PassStatus</p>
+        </div>
+    </div>
+}
+else
+{
+    <p> No student record found.</p>
+}
+<style>
+
+    .center-heading {
+        text-align: center; /* Centers the text */
+        margin-bottom: 20px; /* Adds space between heading and buttons */
+    }
+
+    .search-container {
+        margin-bottom: 20px;
+        display: flex;
+        gap: 10px;
+    }
+
+    .search-box {
+        padding: 10px;
+        font-size: 16px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        width: 100%;
+        max-width: 300px;
+    }
+
+    .btn-search {
+        padding: 10px 15px;
+        background-color: #007bff;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+
+    .table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+
+        .table th, .table td {
+            padding: 10px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .table th {
+            background-color: #f2f2f2;
+        }
+
+        .table tr:hover {
+            background-color: #f1f1f1;
+        }
+
+    .student-summary {
+        margin-top: 20px;
+    }
+</style>

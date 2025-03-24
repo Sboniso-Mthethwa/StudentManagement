@@ -1,0 +1,145 @@
+﻿@model IEnumerable<Mark>
+
+@{
+    ViewBag.Title = "View Results";
+    bool hasRecords = Model != null && Model.Any();
+}
+
+<h2 class="center-heading" style="text-align: center; font-family: 'Times New Roman', Times, serif; color:black; font-size: 35px;">View Student Results</h2>
+
+<!-- Search input for student name -->
+<div class="search-container">
+    <input type="text" id="searchStudentInput" placeholder="Enter student name" class="search-box" />
+    <button id="searchButton" class="btn btn-search">Search</button>
+</div>
+
+@if (hasRecords)
+{
+    <!-- Table to display the results -->
+    <table class="table" id="marksTable">
+        <thead>
+            <tr>
+                <th>Student Name</th>
+                <th>Subject Name</th>
+                <th>Assignment 1 Marks</th>
+                <th>Exam Mark</th>
+                <th>Total Marks (20% Assignment + 80% Exam)</th>
+                <th>Status (Pass/Fail)</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@Html.DisplayFor(modelItem => item.Student.Name)</td>
+                    <td>@Html.DisplayFor(modelItem => item.Course.CourseName)</td>
+                    <td class="assignment-marks">@Html.DisplayFor(modelItem => item.Assignment1)</td>
+                    <td class="exam-marks">@Html.DisplayFor(modelItem => item.Score)</td>
+                    <td class="total-marks"></td>
+                    <td class="status"></td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    <!-- Display student's average score and pass/fail status -->
+    <div class="student-summary">
+        <p><strong>Average Score:</strong> @ViewBag.AverageScore</p>
+        <p><strong>Status:</strong> @ViewBag.PassStatus</p>
+    </div>
+}
+else
+{
+    <p>No records found. Please search for a student.</p>
+}
+
+@section Scripts {
+    <script>
+        // Function to calculate total marks and determine pass/fail status
+        function calculateTotalMarks() {
+            var table = document.getElementById('marksTable');
+            var rows = table.getElementsByTagName('tbody')[0].getElementsByTagName('tr');
+
+            for (var i = 0; i < rows.length; i++) {
+                // Get assignment and exam marks
+                var assignmentMarks = parseFloat(rows[i].getElementsByClassName('assignment-marks')[0].innerText);
+                var examMarks = parseFloat(rows[i].getElementsByClassName('exam-marks')[0].innerText);
+
+                // Calculate total marks: 20% assignment + 80% exam
+                var totalMarks = (assignmentMarks * 0.20) + (examMarks * 0.80);
+
+                // Display total marks
+                rows[i].getElementsByClassName('total-marks')[0].innerText = totalMarks.toFixed(2);
+
+                // Determine pass or fail (pass if total marks >= 50)
+                var status = totalMarks >= 50 ? 'Pass' : 'Fail';
+                rows[i].getElementsByClassName('status')[0].innerText = status;
+            }
+        }
+
+        // Call the function to calculate marks when the page loads
+        window.onload = calculateTotalMarks;
+
+        // Search button functionality
+        document.getElementById('searchButton').addEventListener('click', function () {
+            var studentName = document.getElementById('searchStudentInput').value;
+            // Redirect to the same action with the studentName parameter
+            window.location.href = '@Url.Action("ViewResult", "Marks")?studentName=' + studentName;
+        });
+    </script>
+}
+
+<style>
+
+    .center-heading {
+        text-align: center; /* Centers the text */
+        margin-bottom: 20px; /* Adds space between heading and buttons */
+    }
+
+    .search-container {
+        margin-bottom: 20px;
+        display: flex;
+        gap: 10px;
+    }
+
+    .search-box {
+        padding: 10px;
+        font-size: 16px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        width: 100%;
+        max-width: 300px;
+    }
+
+    .btn-search {
+        padding: 10px 15px;
+        background-color: #007bff;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+
+    .table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+
+        .table th, .table td {
+            padding: 10px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .table th {
+            background-color: #f2f2f2;
+        }
+
+        .table tr:hover {
+            background-color: #f1f1f1;
+        }
+
+    .student-summary {
+        margin-top: 20px;
+    }
+</style>

@@ -1,0 +1,314 @@
+﻿@model StudentManagement.Models.RegisterViewModel
+@{
+    ViewBag.Title = "Register";
+}
+
+<!--<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title</title>
+    <link rel="stylesheet" href="~/Content/site.css" />
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f8f9fa;
+            margin: 0;
+            padding: 0;
+        }
+
+        main {
+            max-width: 800px;
+            margin: 2rem auto;
+            padding: 1rem;
+            background-color: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        h2 {
+            color: #343a40;
+            margin-bottom: 1rem;
+        }
+
+        .row {
+            margin-bottom: 1rem;
+        }
+
+        .col-form-label {
+            font-weight: bold;
+        }
+
+        .form-control {
+            border-radius: 4px;
+            border: 1px solid #ced4da;
+            padding: 0.5rem;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        .btn {
+            border-radius: 4px;
+            padding: 0.5rem 1rem;
+            font-size: 1rem;
+            cursor: pointer;
+        }
+
+        .btn-outline-dark {
+            border: 1px solid #343a40;
+            color: #343a40;
+            background-color: transparent;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+            .btn-outline-dark:hover {
+                background-color: #343a40;
+                color: #ffffff;
+            }
+
+        .text-danger {
+            color: #dc3545;
+        }
+    </style>
+</head>
+<body>
+    <main aria-labelledby="title">-->
+@*<h2 id="title">@ViewBag.Title</h2>*@
+
+<!--@using (Html.BeginForm("Register", "Account", FormMethod.Post, new { role = "form", id = "registerForm" }))
+        {
+            @Html.AntiForgeryToken()
+            <h4>Create a new account.</h4>
+            <hr />
+            @Html.ValidationSummary("", new { @class = "text-danger" })
+            <div class="row">
+                @Html.LabelFor(m => m.Email, new { @class = "col-md-2 col-form-label" })
+                <div class="col-md-10">
+                    @Html.TextBoxFor(m => m.Email, new { @class = "form-control", placeholder = "Enter your email" })
+                </div>
+            </div>
+            <div class="row">
+                @Html.LabelFor(m => m.Password, new { @class = "col-md-2 col-form-label" })
+                <div class="col-md-10">
+                    @Html.PasswordFor(m => m.Password, new { @class = "form-control", placeholder = "Enter your password" })
+                </div>
+            </div>
+            <div class="row">
+                @Html.LabelFor(m => m.ConfirmPassword, new { @class = "col-md-2 col-form-label" })
+                <div class="col-md-10">
+                    @Html.PasswordFor(m => m.ConfirmPassword, new { @class = "form-control", placeholder = "Confirm your password" })
+                </div>
+            </div>
+            <div class="row">
+                <div class="offset-md-2 col-md-10">
+                    <input type="submit" value="Register" class="btn btn-outline-dark" />
+                </div>
+            </div>
+        }
+    </main>
+
+   
+</body>
+</html>-->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title</title>
+    <link rel="stylesheet" href="~/Content/site.css" />
+    <style>
+        main {
+            font-family: Arial, sans-serif;
+            background-color: #f8f9fa;
+            margin: 0;
+            height: 80vh; /* Full viewport height */
+            display: flex;
+            justify-content: center;
+            align-items: center; /* Centers the form vertically and horizontally */
+        }
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  max-width: 350px;
+  padding: 20px;
+  border-radius: 20px;
+  position: relative;
+  background-color: #1a1a1a;
+  color: #fff;
+  border: 1px solid #333;
+}
+
+.title {
+  font-size: 28px;
+  font-weight: 600;
+  letter-spacing: -1px;
+  position: relative;
+  display: flex;
+  align-items: center;
+  padding-left: 30px;
+  color: #00bfff;
+}
+
+.title::before {
+  width: 18px;
+  height: 18px;
+}
+
+.title::after {
+  width: 18px;
+  height: 18px;
+  animation: pulse 1s linear infinite;
+}
+
+.title::before,
+.title::after {
+  position: absolute;
+  content: "";
+  height: 16px;
+  width: 16px;
+  border-radius: 50%;
+  left: 0px;
+  background-color: #00bfff;
+}
+
+.message,
+.signin {
+  font-size: 14.5px;
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.signin {
+  text-align: center;
+}
+
+.signin a:hover {
+  text-decoration: underline royalblue;
+}
+
+.signin a {
+  color: #00bfff;
+}
+
+.flex {
+  display: flex;
+  width: 100%;
+  gap: 6px;
+}
+
+.form label {
+  position: relative;
+}
+
+.form label .input {
+  background-color: #333;
+  color: #fff;
+  width: 100%;
+  padding: 20px 05px 05px 10px;
+  outline: 0;
+  border: 1px solid rgba(105, 105, 105, 0.397);
+  border-radius: 10px;
+}
+
+.form label .input + span {
+  color: rgba(255, 255, 255, 0.5);
+  position: absolute;
+  left: 10px;
+  top: 0px;
+  font-size: 0.9em;
+  cursor: text;
+  transition: 0.3s ease;
+}
+
+.form label .input:placeholder-shown + span {
+  top: 12.5px;
+  font-size: 0.9em;
+}
+
+.form label .input:focus + span,
+.form label .input:valid + span {
+  color: #00bfff;
+  top: 0px;
+  font-size: 0.7em;
+  font-weight: 600;
+}
+
+.input {
+  font-size: medium;
+}
+
+.submit {
+  border: none;
+  outline: none;
+  padding: 10px;
+  border-radius: 10px;
+  color: #fff;
+  font-size: 16px;
+  transform: .3s ease;
+  background-color: #00bfff;
+}
+
+.submit:hover {
+  background-color: #00bfff96;
+}
+
+keyframes pulse {
+  from {
+    transform: scale(0.9);
+    opacity: 1;
+  }
+
+  to {
+    transform: scale(1.8);
+    opacity: 0;
+  }
+}
+    </style>
+</head>
+<body>
+    @Html.AntiForgeryToken()
+    <main aria-labelledby="title">
+        <form asp-action="Register" method="post" class="form" id="registerForm">
+            <p class="title">Register</p>
+            <p class="message">Signup now and get full access to our app.</p>
+
+
+            <label>
+                <input class="input" type="email" name="Email" placeholder="" required="">
+                <span>Email</span>
+            </label>
+
+            <label>
+                <input class="input" type="password" name="Password" placeholder="" required="">
+                <span>Password</span>
+            </label>
+            <label>
+                <input class="input" type="password" name="ConfirmPassword" placeholder="" required="">
+                <span>Confirm password</span>
+            </label>
+            <button type="submit" class="submit">Submit</button>
+            <p class="signin">Already have an account? <a href="@Url.Action("Login", "Account")">Signin</a></p>
+        </form>
+    </main>
+
+    @section Scripts {
+        @Scripts.Render("~/bundles/jqueryval")
+        <script>
+            document.addEventListener('DOMContentLoaded', function () {
+                var form = document.getElementById('registerForm');
+                form.addEventListener('submit', function (event) {
+                    var password = form.querySelector('input[name="Password"]').value;
+                    var confirmPassword = form.querySelector('input[name="ConfirmPassword"]').value;
+                    if (password !== confirmPassword) {
+                        event.preventDefault();
+                        alert('Passwords do not match.');
+                    }
+                });
+            });
+        </script>
+    }
+</body>
+</html>

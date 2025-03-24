@@ -1,0 +1,168 @@
+﻿@model IEnumerable<Mark>
+
+@{
+    ViewBag.Title = "Student Mark sheet";
+}
+
+<h2 class="center-heading" style="text-align: center; font-family: 'Times New Roman', Times, serif; color: 000000; font-size: 35px; ">Student Marks Sheet</h2>
+
+<div class="header-container">
+    <div class="search-container">
+        <input type="text" id="searchStudentInput" onkeyup="searchTable()" placeholder="Search by ID Number or Student Name...." class="search-box" />
+        <input type="text" id="searchCourseInput" onkeyup="searchTable()" placeholder="Search by course name.." class="search-box" />
+    </div>
+    <p>
+        <a href="@Url.Action("Create", "Marks")" class="btn btn-create">Add New Marks</a>
+    </p>
+</div>
+<table class="table" id="marksTable">
+    <thead>
+        <tr>
+            <th>ID Number</th>
+            <th>@Html.DisplayNameFor(model => model.First().Student.Name)</th>
+            @*<th>@Html.DisplayNameFor(model => model.First().Student.Email)</th>*@
+            <th>@Html.DisplayNameFor(model => model.First().Course.CourseName)</th>
+            <th>@Html.DisplayNameFor(model => model.First().Assignment1)</th>
+            <th>@Html.DisplayNameFor(model => model.First().Score)</th>
+            <th>Actions</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@Html.DisplayFor(modelItem => item.Student.IdNumber)</td>
+                <td>@Html.DisplayFor(modelItem => item.Student.Name)</td>
+                @*<td>@Html.DisplayFor(modelItem => item.Student.Email)</td>*@
+                <td>@Html.DisplayFor(modelItem => item.Course.CourseName)</td>
+                <td>@Html.DisplayFor(modelItem => item.Assignment1)</td>
+                <td>@Html.DisplayFor(modelItem => item.Score)</td>
+                <td>
+                    <a href="@Url.Action("Edit", new { id = item.MarkId })" class="btn btn-edit">Alter</a> |
+                    <a href="@Url.Action("Details", new { id = item.MarkId })" class="btn btn-details">More Info</a> |
+                    <a href="@Url.Action("Delete", new { id = item.MarkId })" class="btn btn-delete">Remove</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@section Scripts {
+    <script>
+        function searchTable() {
+            var studentInput, courseInput, table, tr, i, studentValue, courseValue, td, studentText, courseText;
+            studentInput = document.getElementById("searchStudentInput");
+            courseInput = document.getElementById("searchCourseInput");
+            studentValue = studentInput.value.toLowerCase();
+            courseValue = courseInput.value.toLowerCase();
+            table = document.getElementById("marksTable");
+            tr = table.getElementsByTagName("tr");
+
+            for (i = 1; i < tr.length; i++) {
+                tr[i].style.display = "none"; // Hide all rows initially
+                td = tr[i].getElementsByTagName("td");
+                if (td.length > 0) {
+                    // Assuming the first column is ID Number (index 0) and the second is for Student Name (index 1)
+                    var idNumberText = td[0].textContent || td[0].innerText; // ID Number
+                    studentText = td[1].textContent || td[1].innerText; // Student Name
+                    courseText = td[2].textContent || td[2].innerText; // Assuming the third column is for course names
+
+                    // Check if the row matches the student name or ID Number and course name
+                    if ((idNumberText.toLowerCase().indexOf(studentValue) > -1 || studentText.toLowerCase().indexOf(studentValue) > -1)
+                        && courseText.toLowerCase().indexOf(courseValue) > -1) {
+                        tr[i].style.display = ""; // Show rows that match either student ID/Name and course
+                    }
+                }
+            }
+        }
+    </script>
+}
+
+
+
+<style>
+    .search-container {
+        margin-bottom: 20px;
+        display: flex;
+        gap: 10px;
+    }
+
+    .header-container {
+        display: flex;
+        justify-content: space-between; /* Aligns items to the ends */
+        align-items: center; /* Vertically centers the items */
+        margin-bottom: 20px; /* Adds space below the header */
+    }
+
+    .search-box {
+        padding: 10px;
+        font-size: 16px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        width: 100%;
+        max-width: 300px;
+    }
+
+    .table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+
+        .table th, .table td {
+            padding: 10px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .table th {
+            background-color: #f2f2f2;
+        }
+
+        .table tr:hover {
+            background-color: #f1f1f1;
+        }
+
+    .btn {
+        display: inline-block;
+        padding: 5px 10px;
+        margin: 0 5px;
+        text-decoration: none;
+        border-radius: 5px;
+        color: #fff;
+        font-weight: bold;
+        text-align: center;
+    }
+
+    .btn-edit {
+        background-color: #007bff;
+    }
+
+        .btn-edit:hover {
+            background-color: #0056b3;
+        }
+
+    .btn-details {
+        background-color: #17a2b8;
+    }
+
+        .btn-details:hover {
+            background-color: #138496;
+        }
+
+    .btn-delete {
+        background-color: #dc3545;
+    }
+
+        .btn-delete:hover {
+            background-color: #c82333;
+        }
+
+    .btn-create {
+        background-color: #28a745;
+    }
+
+        .btn-create:hover {
+            background-color: #218838;
+        }
+</style>

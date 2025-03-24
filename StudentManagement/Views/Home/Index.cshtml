@@ -1,0 +1,97 @@
+﻿@{
+    ViewBag.Title = "Student Management System";
+}
+<style>
+    body {
+        background-image: url(https://images.unsplash.com/photo-1499750310107-5fef28a66643?q=80&w=1770&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D);
+        background-size: cover;
+        background-position: center;
+        color: #333;
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+    }
+
+    .hero {
+        position: relative;
+        background-image: url(https://images.unsplash.com/photo-1492538368677-f6e0afe31dcc?q=80&w=1770&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D);
+        background-size: cover;
+        background-position: center;
+        color: #fff;
+        padding: 50px;
+        text-align: center;
+        overflow: hidden;
+    }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5); /* Dark overlay */
+            z-index: 1;
+        }
+
+        .hero h1, .hero p {
+            position: relative;
+            margin: 0;
+            padding: 0;
+            z-index: 2;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+        }
+
+    .container {
+        padding: 20px;
+    }
+
+    .transparent-container {
+        background: rgba(255, 255, 255, 0.8); /* Semi-transparent white background */
+        border-radius: 8px; /* Optional: rounded corners */
+        padding: 20px;
+        margin-top: 20px;
+    }
+
+    .row {
+        margin-top: 0;
+    }
+
+    .col-md-4 {
+        margin-bottom: 20px;
+    }
+
+    .btn-primary, .btn-outline-dark {
+        margin-top: 10px;
+    }
+
+</style>
+
+<main>
+    <section class="hero" aria-labelledby="welcomeTitle">
+        <h1 id="title">Welcome to Learner Management System</h1>
+        <p class="lead">Manage student records efficiently with our comprehensive system.</p>
+        <p><a href="@Url.Action("Login", "Account")" class="btn btn-primary btn-md">View Students &raquo;</a></p>
+    </section>
+
+    <div class="container">
+        <div class="row transparent-container">
+            <section class="col-md-4" aria-labelledby="addStudentTitle">
+                <h2 id="addStudentTitle">Add New Student</h2>
+                <p>Quickly add new student information into the system.</p>
+                <p><a class="btn btn-outline-dark" href="@Url.Action("Create", "Students")">Add Student &raquo;</a></p>
+            </section>
+            <section class="col-md-4" aria-labelledby="manageStudentsTitle">
+                <h2 id="manageStudentsTitle">Manage Students</h2>
+                <p>View, edit, or delete student records as needed.</p>
+                <p><a class="btn btn-outline-dark" href="@Url.Action("Index", "Students")">Manage Students &raquo;</a></p>
+            </section>
+            <section class="col-md-4" aria-labelledby="reportsTitle">
+                <h2 id="reportsTitle">Generate Reports</h2>
+                <p>Generate detailed reports about student performance and records.</p>
+                <p><a class="btn btn-outline-dark" href="@Url.Action("Login", "Account")">Generate Reports &raquo;</a></p>
+            </section>
+        </div>
+    </div>
+</main>
+

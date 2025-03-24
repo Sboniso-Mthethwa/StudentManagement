@@ -1,0 +1,160 @@
+﻿
+@model IEnumerable<Student>
+
+@{
+    ViewBag.Title = "Student List";
+}
+
+<h2 class="center-heading" style="text-align: center; font-family: 'Times New Roman', Times, serif; color: 000000; font-size: 35px;">List Of Students</h2>
+<div class="header-container">
+    <input type="text" id="searchInput" onkeyup="searchTable()" placeholder="Search for ID number, names, or emails.." class="search-box" />
+    <p>
+        <a href="@Url.Action("Create", "Marks")" class="btn btn-create">Assign Marks</a>
+    </p>
+    <p>
+        <a href="@Url.Action("Create", "Students")" class="btn btn-create">Enroll Students</a>
+    </p>
+</div>
+
+<table class="table" id="studentTable">
+    <thead>
+        <tr>
+            @*<th>@Html.DisplayNameFor(model => model.First().StudentId)</th>*@
+            <th>@Html.DisplayNameFor(model => model.First().IdNumber)</th>
+            <th>@Html.DisplayNameFor(model => model.First().Name)</th>
+            <th>@Html.DisplayNameFor(model => model.First().Email)</th>
+            <th>@Html.DisplayNameFor(model => model.First().PhoneNumber)</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <!--<td>@Html.DisplayFor(modelItem => item.StudentId)</td>--> <!-- Display Student ID -->
+                <td>@Html.DisplayFor(modelItem => item.IdNumber)</td> <!-- Display ID Number -->
+                <td>@Html.DisplayFor(modelItem => item.Name)</td>
+                <td>@Html.DisplayFor(modelItem => item.Email)</td>
+                <td>@Html.DisplayFor(modelItem => item.PhoneNumber)</td>
+                <td>
+                    @*<a href="@Url.Action("Edit", new { id = item.StudentId })" class="btn btn-edit">Edit</a> |*@
+                    <a href="@Url.Action("Details", new { id = item.StudentId })" class="btn btn-details">More Details</a> |
+                    <a href="@Url.Action("Delete", new { id = item.StudentId })" class="btn btn-delete">Remove</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+
+
+<script>
+    function searchTable() {
+        var input, filter, table, tr, td, i, j, txtValue;
+        input = document.getElementById("searchInput");
+        filter = input.value.toLowerCase();
+        table = document.getElementById("studentTable");
+        tr = table.getElementsByTagName("tr");
+
+        for (i = 1; i < tr.length; i++) { // Start from 1 to skip header
+            tr[i].style.display = "none"; // Hide all rows initially
+            td = tr[i].getElementsByTagName("td");
+            for (j = 0; j < td.length; j++) { // Check all cells in the row
+                if (td[j]) {
+                    txtValue = td[j].textContent || td[j].innerText;
+                    // If the input matches any cell in the row, show the row
+                    if (txtValue.toLowerCase().indexOf(filter) > -1) {
+                        tr[i].style.display = ""; // Show row if match is found
+                        break; // No need to check further cells
+                    }
+                }
+            }
+        }
+    }
+</script>
+
+
+<style>
+    .center-heading {
+        text-align: center; /* Centers the text */
+        margin-bottom: 20px; /* Adds space between heading and buttons */
+    }
+
+    .header-container {
+        display: flex;
+        justify-content: space-between; /* Aligns items to the ends */
+        align-items: center; /* Vertically centers the items */
+        margin-bottom: 20px; /* Adds space below the header */
+    }
+
+    .search-box {
+        margin-bottom: 20px;
+        padding: 10px;
+        width: 100%;
+        font-size: 16px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+    }
+
+    .table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+
+        .table th, .table td {
+            padding: 10px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .table th {
+            background-color: #f2f2f2;
+        }
+
+        .table tr:hover {
+            background-color: #f1f1f1;
+        }
+
+    .btn {
+        display: inline-block;
+        padding: 5px 10px;
+        margin: 0 5px;
+        text-decoration: none;
+        border-radius: 5px;
+        color: #fff;
+        font-weight: bold;
+        text-align: center;
+    }
+
+    .btn-edit {
+        background-color: #007bff;
+    }
+
+        .btn-edit:hover {
+            background-color: #0056b3;
+        }
+
+    .btn-details {
+        background-color: #17a2b8;
+    }
+
+        .btn-details:hover {
+            background-color: #138496;
+        }
+
+    .btn-delete {
+        background-color: #dc3545;
+    }
+
+        .btn-delete:hover {
+            background-color: #c82333;
+        }
+
+    .btn-create {
+        background-color: #28a745;
+    }
+
+        .btn-create:hover {
+            background-color: #218838;
+        }
+</style>

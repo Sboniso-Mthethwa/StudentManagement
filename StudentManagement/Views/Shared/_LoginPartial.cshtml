@@ -1,0 +1,62 @@
+﻿@using Microsoft.AspNet.Identity
+@if (Request.IsAuthenticated)
+{
+    string loggedInEmail = User.Identity.GetUserName();
+
+    // Check if the logged-in email is SchoolAdmin
+    if (loggedInEmail.Equals("SchoolAdmin@gmail.com", StringComparison.OrdinalIgnoreCase))
+    {
+        <!-- Admin-specific navigation -->
+
+<ul class="navbar-nav flex-grow-1">
+    <li>@Html.ActionLink("Dashboard", "AdminDashboard", "Home", new { area = "" }, new { @class = "nav-link" })</li>
+    <li>@Html.ActionLink("Student", "Index", "Students", new { area = "" }, new { @class = "nav-link" })</li>
+    <li>@Html.ActionLink("Course", "Index", "Courses", new { area = "" }, new { @class = "nav-link" })</li>
+    <li>@Html.ActionLink("Mark", "Index", "Marks", new { area = "" }, new { @class = "nav-link" })</li>
+    <li>@Html.ActionLink("Student Results", "ViewResult", "Marks", new { area = "" }, new { @class = "nav-link" })</li>
+    <li>@Html.ActionLink("Performance Chart", "SubjectChart", "Marks", new { area = "" }, new { @class = "nav-link" })</li>
+</ul>
+
+
+        using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
+        {
+            @Html.AntiForgeryToken()
+
+            <ul class="navbar-nav navbar-right">
+                <li>
+                    @Html.ActionLink("Hello " + loggedInEmail + "!", "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage", @class = "nav-link" })
+                </li>
+                <li><a class="nav-link" href="javascript:document.getElementById('logoutForm').submit()">Logout</a></li>
+            </ul>
+        }
+    }
+    else
+    {
+        <ul class="navbar-nav flex-grow-1">
+            <li>@Html.ActionLink("About", "About", "Home", new { area = "" }, new { @class = "nav-link" })</li>
+            <li>@Html.ActionLink("Contact", "Contact", "Home", new { area = "" }, new { @class = "nav-link" })</li>
+            </ul>
+
+        using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
+        {
+            @Html.AntiForgeryToken()
+
+            <ul class="navbar-nav navbar-right">
+                <li>
+                    @Html.ActionLink("Hello " + loggedInEmail + "!", "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage", @class = "nav-link" })
+                </li>
+                <li><a class="nav-link" href="javascript:document.getElementById('logoutForm').submit()">Logout</a></li>
+            </ul>
+        }
+    }
+}
+else
+{
+    <ul class="navbar-nav flex-grow-1">
+    </ul>
+    <!-- Navigation for unauthenticated users -->
+    <ul class="navbar-nav navbar-right">
+        <li>@Html.ActionLink("Register", "Register", "Account", routeValues: null, htmlAttributes: new { id = "registerLink", @class = "nav-link" })</li>
+                <li>@Html.ActionLink("Log in", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink", @class = "nav-link" })</li>
+            </ul>
+            }

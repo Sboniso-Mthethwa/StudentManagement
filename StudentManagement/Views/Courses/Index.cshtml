@@ -1,0 +1,148 @@
+﻿@model IEnumerable<Course>
+
+@{
+    ViewBag.Title = "Subject List";
+}
+
+<h2 class="center-heading" style="text-align: center; font-family: 'Times New Roman', Times, serif; color: 000000; font-size: 35px; ">Subject List</h2>
+<div class="header-container">
+    <input type="text" id="searchInput" onkeyup="searchTable()" placeholder="Search for course names.." class="search-box" />
+    <p>
+        <a href="@Url.Action("Create", "Marks")" class="btn btn-create">Assign subject Marks</a>
+    </p>
+</div>
+    <table class="table" id="courseTable">
+        <thead>
+            <tr>
+                <th>@Html.DisplayNameFor(model => model.CourseId)</th>
+                <th>@Html.DisplayNameFor(model => model.CourseName)</th>
+                <th>@Html.DisplayNameFor(model => model.Credits)</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@Html.DisplayFor(modelItem => item.CourseId)</td>
+                    <td>@Html.DisplayFor(modelItem => item.CourseName)</td>
+                    <td>@Html.DisplayFor(modelItem => item.Credits)</td>
+                    <td>
+
+                        <a href="@Url.Action("Details", new { id = item.CourseId })" class="btn btn-details">Info</a> |
+                        <a href="@Url.Action("Delete", new { id = item.CourseId })" class="btn btn-delete">Remove</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    @section Scripts {
+        <script>
+            function searchTable() {
+                var input, filter, table, tr, td, i, txtValue;
+                input = document.getElementById("searchInput");
+                filter = input.value.toLowerCase();
+                table = document.getElementById("courseTable");
+                tr = table.getElementsByTagName("tr");
+
+                for (i = 1; i < tr.length; i++) {
+                    tr[i].style.display = "none";
+                    td = tr[i].getElementsByTagName("td");
+                    if (td.length > 0) {
+                        txtValue = td[0].textContent || td[0].innerText;
+                        if (txtValue.toLowerCase().indexOf(filter) > -1) {
+                            tr[i].style.display = "";
+                        }
+                    }
+                }
+            }
+        </script>
+    }
+
+    <style>
+        .center-heading {
+            text-align: center; /* Centers the text */
+            margin-bottom: 20px; /* Adds space between heading and buttons */
+        }
+
+        .header-container {
+            display: flex;
+            justify-content: space-between; /* Aligns items to the ends */
+            align-items: center; /* Vertically centers the items */
+            margin-bottom: 20px; /* Adds space below the header */
+        }
+        .search-box {
+            margin-bottom: 20px;
+            padding: 10px;
+            width: 100%;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        .table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+            .table th, .table td {
+                padding: 10px;
+                text-align: left;
+                border-bottom: 1px solid #ddd;
+            }
+
+            .table th {
+                background-color: #f2f2f2;
+            }
+
+            .table tr:hover {
+                background-color: #f1f1f1;
+            }
+
+        .btn {
+            display: inline-block;
+            padding: 5px 10px;
+            margin: 0 5px;
+            text-decoration: none;
+            border-radius: 5px;
+            color: #fff;
+            font-weight: bold;
+            text-align: center;
+        }
+
+        .btn-edit {
+            background-color: #007bff;
+        }
+
+            .btn-edit:hover {
+                background-color: #0056b3;
+            }
+
+        .btn-details {
+            background-color: #17a2b8;
+        }
+
+            .btn-details:hover {
+                background-color: #138496;
+            }
+
+        .btn-delete {
+            background-color: #dc3545;
+        }
+
+            .btn-delete:hover {
+                background-color: #c82333;
+            }
+
+        .btn-create {
+            background-color: #28a745;
+        }
+
+            .btn-create:hover {
+                background-color: #218838;
+            }
+        .btn[disabled] {
+            background-color: #d6d6d6; /* Gray background */
+            color: #a1a1a1; /* Gray text */
+    </style>

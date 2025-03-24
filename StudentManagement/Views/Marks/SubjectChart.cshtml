@@ -1,0 +1,149 @@
+﻿@using Newtonsoft.Json
+
+@{
+    ViewBag.Title = "Subject Pass/Fail Chart";
+}
+
+<h2 class="center-heading" style="text-align: center; font-family: 'Times New Roman', Times, serif; color: 000000; font-size: 35px;">Subject Pass/Fail data Chart</h2>
+
+<div>
+    <div class="header-container">
+        <div class="search-container">
+            <label for="searchSubjectInput">Search Subject:</label>
+            <input type="text" id="searchSubjectInput" onkeyup="updateChart()" placeholder="Enter subject name..." />
+        </div>
+        <p>
+            <a href="@Url.Action("PassFailChart", "Marks")" class="btn btn-create">Overall Pass/Fail Chart</a>
+        </p>
+    </div>
+</div>
+
+        <!-- Chart Canvas -->
+        <div style="width: 50%; margin: 0 auto; height:400px;">
+            <canvas id="chart"></canvas>
+        </div>
+
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+        <script>
+    // Initialize an empty chart variable
+    let chart;
+
+    // Sample data from the server
+    const coursePassFailData = @Html.Raw(JsonConvert.SerializeObject(ViewBag.CoursePassFailData));
+
+    // Function to create a pie chart
+    function createChart(passCount, failCount, subjectName) {
+        const ctx = document.getElementById('chart').getContext('2d');
+
+        // If the chart already exists, destroy it
+        if (chart) {
+            chart.destroy();
+        }
+
+        // Create a new chart
+        chart = new Chart(ctx, {
+            type: 'pie',
+            data: {
+                labels: ['Passed', 'Failed'],
+                datasets: [{
+                    data: [passCount, failCount],
+                    backgroundColor: ['#36A2EB', '#FF6384'],
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        position: 'top',
+                    },
+                    title: {
+                        display: true,
+                        text: subjectName,
+                    }
+                }
+            }
+        });
+    }
+
+    // Function to update the chart based on the input
+    function updateChart() {
+        const input = document.getElementById("searchSubjectInput").value.toLowerCase();
+        const courseData = coursePassFailData.find(course => course.CourseName.toLowerCase() === input);
+
+        // If the course is found, create the chart with its data
+        if (courseData) {
+            createChart(courseData.PassCount, courseData.FailCount, courseData.CourseName);
+        } else {
+            // Clear the chart if no course is found
+            if (chart) {
+                chart.destroy();
+            }
+        }
+    }
+        </script>
+        
+<style>
+    .search-container {
+        margin-bottom: 20px;
+        display: flex;
+        gap: 10px;
+    }
+
+    .header-container {
+        display: flex;
+        justify-content: space-between; /* Aligns items to the ends */
+        align-items: center; /* Vertically centers the items */
+        margin-bottom: 20px; /* Adds space below the header */
+    }
+
+    .search-box {
+        padding: 10px;
+        font-size: 16px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        width: 100%;
+        max-width: 300px;
+    }
+    .btn {
+        display: inline-block;
+        padding: 5px 10px;
+        margin: 0 5px;
+        text-decoration: none;
+        border-radius: 5px;
+        color: #fff;
+        font-weight: bold;
+        text-align: center;
+    }
+
+    .btn-edit {
+        background-color: #007bff;
+    }
+
+        .btn-edit:hover {
+            background-color: #0056b3;
+        }
+
+    .btn-details {
+        background-color: #17a2b8;
+    }
+
+        .btn-details:hover {
+            background-color: #138496;
+        }
+
+    .btn-delete {
+        background-color: #dc3545;
+    }
+
+        .btn-delete:hover {
+            background-color: #c82333;
+        }
+
+    .btn-create {
+        background-color: #28a745;
+    }
+
+        .btn-create:hover {
+            background-color: #218838;
+        }
+</style>

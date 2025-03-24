@@ -1,0 +1,335 @@
+﻿@using StudentManagement.Models
+@model LoginViewModel
+@{
+    ViewBag.Title = "Log in";
+
+}
+@if (TempData["ErrorMessage"] != null)
+{
+    <script>
+        alert('@TempData["ErrorMessage"]');
+        window.location.href = '@Url.Action("Register", "Account")';
+    </script>
+}
+
+<!--<!DOCTYPE html>
+<html>
+<head>
+    <title>@ViewBag.Title</title>
+    <link rel="stylesheet" type="text/css" href="~/Content/site.css" />-->
+ <!-- Link to your CSS file -->
+<!--<style>
+        /* Inline CSS for quick adjustments */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f4f8; /* Light background color for a clean look */
+            color: #333; /* Dark text color for better readability */
+        }
+
+        main {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        #loginForm {
+            background-color: #ffffff; /* White background for the form */
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        #title {
+            font-size: 28px;
+            color: #4a90e2; /* Primary color for headings */
+            margin-bottom: 20px;
+        }
+
+        h4 {
+            margin-bottom: 15px;
+            color: #555; /* Slightly lighter text color for subheadings */
+        }
+
+        hr {
+            margin: 10px 0;
+            border: 0;
+            border-top: 1px solid #e1e8ed; /* Light gray for horizontal rules */
+        }
+
+        .form-control {
+            border-radius: 4px;
+            border: 1px solid #ccd0d5; /* Subtle border color */
+            padding: 10px;
+            font-size: 16px;
+        }
+
+        .btn-outline-dark {
+            border-color: #4a90e2; /* Primary color for button border */
+            color: #4a90e2;
+            background-color: transparent;
+        }
+
+            .btn-outline-dark:hover {
+                background-color: #4a90e2;
+                color: #ffffff;
+            }
+
+        p a {
+            color: #4a90e2; /* Primary color for links */
+        }
+
+            p a:hover {
+                text-decoration: underline;
+            }
+
+        /* Additional styles */
+        .checkbox label {
+            color: #555;
+        }
+    </style>
+</head>
+<body>
+    <main aria-labelledby="title">
+
+        <div class="row">
+            <div class="col-md-8">
+                <section id="loginForm">
+                    @using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { role = "form" }))
+                    {
+                        @Html.AntiForgeryToken()
+                        <h2 id="title">@ViewBag.Title</h2>
+                        <hr />
+                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                        <div class="row">
+                            @Html.LabelFor(m => m.Email, new { @class = "col-md-2 col-form-label" })
+                            <div class="col-md-10">
+                                @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="row">
+                            @Html.LabelFor(m => m.Password, new { @class = "col-md-2 col-form-label" })
+                            <div class="col-md-10">
+                                @Html.PasswordFor(m => m.Password, new { @class = "form-control", id = "Password" })
+                                <button type="button" id="togglePassword" class="btn btn-link">Show Password</button>
+                                @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="offset-md-2 col-md-10">
+                                <div class="checkbox">
+                                    @Html.CheckBoxFor(m => m.RememberMe)
+                                    @Html.LabelFor(m => m.RememberMe)
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="offset-md-2 col-md-10">
+                                <input type="submit" value="Log in" class="btn btn-outline-dark" />
+                            </div>
+                        </div>
+                        <p>
+                            @Html.ActionLink("Register as a new user", "Register")
+                        </p>
+                        <p>
+                            @Html.ActionLink("Forgot your password?", "ForgotPassword")
+                        </p>
+                    }
+                </section>
+            </div>
+        </div>
+    </main>
+
+
+</body>
+</html>-->
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title</title>
+    <link rel="stylesheet" href="~/Content/site.css" />
+    <style>
+        main {
+            font-family: Arial, sans-serif;
+            background-color: #f8f9fa;
+            margin: 0;
+            height: 80vh; /* Full viewport height */
+            display: flex;
+            justify-content: center;
+            align-items: center; /* Centers the form vertically and horizontally */
+        }
+
+        .form {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            max-width: 350px;
+            padding: 20px;
+            border-radius: 20px;
+            position: relative;
+            background-color: #1a1a1a;
+            color: #fff;
+            border: 1px solid #333;
+        }
+
+        .title {
+            font-size: 28px;
+            font-weight: 600;
+            letter-spacing: -1px;
+            position: relative;
+            display: flex;
+            align-items: center;
+            padding-left: 30px;
+            color: #00bfff;
+        }
+
+        .title::before,
+        .title::after {
+            position: absolute;
+            content: "";
+            height: 16px;
+            width: 16px;
+            border-radius: 50%;
+            left: 0px;
+            background-color: #00bfff;
+        }
+
+        .title::after {
+            width: 18px;
+            height: 18px;
+            animation: pulse 1s linear infinite;
+        }
+
+        .signin a {
+            color: #00bfff;
+        }
+
+        .signin a:hover {
+            text-decoration: underline royalblue;
+        }
+
+        .form label {
+            position: relative;
+        }
+
+        .form label .input {
+            background-color: #333;
+            color: #fff;
+            width: 100%;
+            padding: 20px 05px 05px 10px;
+            outline: 0;
+            border: 1px solid rgba(105, 105, 105, 0.397);
+            border-radius: 10px;
+        }
+
+        .form label .input + span {
+            color: rgba(255, 255, 255, 0.5);
+            position: absolute;
+            left: 10px;
+            top: 0px;
+            font-size: 0.9em;
+            cursor: text;
+            transition: 0.3s ease;
+        }
+
+        .form label .input:placeholder-shown + span {
+            top: 12.5px;
+            font-size: 0.9em;
+        }
+
+        .form label .input:focus + span,
+        .form label .input:valid + span {
+            color: #00bfff;
+            top: 0px;
+            font-size: 0.7em;
+            font-weight: 600;
+        }
+
+        .submit {
+            border: none;
+            outline: none;
+            padding: 10px;
+            border-radius: 10px;
+            color: #fff;
+            font-size: 16px;
+            background-color: #00bfff;
+        }
+
+        .submit:hover {
+            background-color: #00bfff96;
+        }
+
+        keyframes pulse {
+            from {
+                transform: scale(0.9);
+                opacity: 1;
+            }
+            to {
+                transform: scale(1.8);
+                opacity: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <main aria-labelledby="title">
+        @using (Html.BeginForm("Login", "Account", FormMethod.Post, new { @class = "form", id = "loginForm" }))
+        {
+            <p class="title">Login</p>
+
+            <label>
+                @Html.TextBoxFor(m => m.Email, new { @class = "input", placeholder = "", required = "required" })
+                <span>Email</span>
+                @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
+            </label>
+
+            <label>
+                @Html.PasswordFor(m => m.Password, new { @class = "input", placeholder = "", required = "required", id = "Password" })
+                <span>Password</span>
+                @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
+            </label>
+
+            <button type="submit" class="submit">Login</button>
+
+            <p class="signin">
+                Already have an account?
+                <a href="@Url.Action("Register", "Account")">SignUp</a>
+            </p>
+            <p>
+                @Html.ActionLink("Forgot your password?", "ForgotPassword")
+            </p>
+        }
+    </main>
+
+    @section Scripts {
+        @Scripts.Render("~/bundles/jqueryval")
+        <script>
+            $(document).ready(function () {
+                // Handle form submission
+                $('form').on('submit', function (e) {
+                    var email = $('#Email').val();
+                    var password = $('#Password').val();
+
+                    if (!email || !password) {
+                        e.preventDefault(); // Prevent form submission
+                        alert('Please fill in all required fields.');
+                    }
+                });
+
+                // Toggle password visibility
+                $('#togglePassword').on('click', function () {
+                    var passwordField = $('#Password');
+                    var type = passwordField.attr('type') === 'password' ? 'text' : 'password';
+                    passwordField.attr('type', type);
+                    $(this).text(type === 'password' ? 'Show Password' : 'Hide Password');
+                });
+            });
+        </script>
+    }
+    }
+</body>
+</html>

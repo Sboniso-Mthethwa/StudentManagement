@@ -1,0 +1,220 @@
+﻿@model Student
+
+@{
+    ViewBag.Title = "Enroll New student";
+}
+
+<!-- Custom CSS Styles -->
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #f8f9fa;
+    }
+
+    h2 {
+        color: #343a40;
+        text-align: center;
+        margin-top: 20px;
+    }
+
+    .form-horizontal {
+        background-color: #ffffff;
+        padding: 20px;
+        border-radius: 5px;
+        box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+        max-width: 600px;
+        margin: auto;
+    }
+
+    .form-group {
+        margin-bottom: 20px;
+    }
+
+    .control-label {
+        font-weight: bold;
+        color: #495057;
+    }
+
+    .form-control {
+        border-radius: 4px;
+        border: 1px solid #ced4da;
+        padding: 10px;
+        font-size: 16px;
+    }
+
+        .form-control:focus {
+            border-color: #80bdff;
+            box-shadow: 0 0 8px rgba(128, 189, 255, 0.5);
+        }
+
+    .btn {
+        border-radius: 4px;
+        padding: 10px 20px;
+        font-size: 16px;
+    }
+
+    .btn-primary {
+        background-color: #007bff;
+        border-color: #007bff;
+    }
+
+        .btn-primary:hover {
+            background-color: #0056b3;
+            border-color: #004085;
+        }
+
+    .btn-secondary {
+        background-color: #6c757d;
+        border-color: #6c757d;
+    }
+
+        .btn-secondary:hover {
+            background-color: #5a6268;
+            border-color: #545b62;
+        }
+
+    .text-danger {
+        color: #dc3545;
+    }
+
+    .alert-danger {
+        background-color: #f8d7da;
+        color: #721c24;
+        border-color: #f5c6cb;
+        border-radius: 4px;
+        padding: 10px;
+        margin-bottom: 20px;
+    }
+
+    /* Additional styling for the Back to List link */
+    .btn-secondary {
+        display: inline-block;
+        margin-top: 10px;
+    }
+</style>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <h4 class="center-heading" style="text-align: center; font-family: 'Times New Roman', Times, serif; color: black; font-size: 35px; ">Add Student Details</h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "alert alert-danger" })
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control", placeholder = "Enter full name" } })
+                @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.IdNumber, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.IdNumber, new { htmlAttributes = new { @class = "form-control", placeholder = "Enter ID Number" } })
+                @Html.ValidationMessageFor(model => model.IdNumber, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Email, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control", placeholder = "Enter email address" } })
+                @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.PhoneNumber, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.PhoneNumber, new { htmlAttributes = new { @class = "form-control", placeholder = "Enter phone number" } })
+                @Html.ValidationMessageFor(model => model.PhoneNumber, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <!-- Stream Selection -->
+        <div class="form-group">
+            <label for="streamSelect" class="control-label col-md-2">Select Stream</label>
+            <div class="col-md-10">
+                <select id="streamSelect" class="form-control" name="SelectedStream" onchange="loadCourses()">
+                    <option value="">Select Stream</option>
+                    @foreach (var stream in ViewBag.Streams)
+                    {
+                        <option value="@stream.StreamName">@stream.StreamName</option>
+                    }
+                </select>
+            </div>
+        </div>
+
+        <!-- Course Selection (populated dynamically) -->
+        <div class="form-group">
+            <label for="courseSelect" class="control-label col-md-2">Select Courses</label>
+            <div class="col-md-10">
+                <select id="courseSelect" class="form-control" name="SelectedCourses" multiple>
+                    <!-- Courses will be dynamically populated based on stream selection -->
+                </select>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Enroll" class="btn btn-primary" />
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index", null, new { @class = "btn btn-secondary" })
+</div>
+
+<style>
+    .center-heading {
+        text-align: center; /* Centers the text */
+        margin-bottom: 20px; /* Adds space between heading and buttons */
+    }
+</style>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    <script>
+        $(document).ready(function() {
+            $('form').submit(function(event) {
+                var isValid = true;
+
+                // Custom validation example for PhoneNumber
+                var phoneNumber = $('#PhoneNumber').val();
+                if (phoneNumber.length < 10 || phoneNumber.length > 11) {
+                    isValid = false;
+                    alert("Phone number must be between 10 and 11 digits.");
+                }
+
+                // Prevent form submission if validation fails
+                if (!isValid) {
+                    event.preventDefault();
+                }
+            });
+        });
+
+         function loadCourses() {
+            var streamName = $('#streamSelect').val();
+            var courses = @Html.Raw(Json.Encode(ViewBag.Streams));
+
+            // Clear the course selection dropdown
+            $('#courseSelect').empty();
+
+            if (streamName) {
+                // Find the selected stream and populate the courses dropdown
+                var selectedStream = courses.find(s => s.StreamName === streamName);
+                if (selectedStream) {
+                    selectedStream.Courses.forEach(function(course) {
+                        $('#courseSelect').append(new Option(course.CourseName, course.CourseId));
+                    });
+                }
+            }
+        }
+
+    </script>
+}

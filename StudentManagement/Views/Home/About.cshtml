@@ -1,0 +1,70 @@
+﻿@{
+    ViewBag.Title = "About Us";
+    ViewBag.Message = "Learn more about our School Management System.";
+}
+<main aria-labelledby="title" class="about-page">
+    <section class="about-intro">
+        <h2 id="title">@ViewBag.Title</h2>
+        <h3>@ViewBag.Message</h3>
+        <p>Our School Management System is designed to streamline and automate various academic and administrative processes. Whether it's managing student records, tracking academic performance, or communicating with parents, our system provides an efficient solution to meet the needs of modern educational institutions.</p>
+    </section>
+
+    <section class="school-mission">
+        <h4>Our Mission</h4>
+        <p>We are committed to providing a comprehensive and user-friendly management system that supports the educational mission of schools. Our goal is to enhance the learning experience by offering tools that simplify administrative tasks and empower educators.</p>
+    </section>
+
+    <section class="key-features">
+        <h4>Key Features</h4>
+        <ul>
+            <li>Student Information Management</li>
+            <li>Gradebook and Performance Tracking</li>
+            <li>Attendance Management</li>
+            <li>Parental Access to Student Progress</li>
+            <li>Communication Tools for Teachers and Parents</li>
+            <li>Customizable Reports and Analytics</li>
+        </ul>
+    </section>
+
+    <section class="contact-info">
+        <h4>Contact Us</h4>
+        <p>If you have any questions or need support, please contact our administration office at:</p>
+        <address>
+            <strong>XYZ School</strong><br>
+            123 Education Road<br>
+            Learning City, 12345<br>
+            Phone: (012) 345-6789<br>
+            Email: <a href="mailto:support@xyzschool.edu">support@xyzschool.edu</a>
+        </address>
+    </section>
+</main>
+
+<style>
+    .about-page {
+        font-family: Arial, sans-serif;
+        margin: 20px;
+    }
+
+        .about-page h2, .about-page h3 {
+            color: #2c3e50;
+        }
+
+        .about-page h4 {
+            color: #2980b9;
+            margin-top: 20px;
+        }
+
+        .about-page p, .about-page ul {
+            line-height: 1.6;
+        }
+
+        .about-page ul {
+            list-style-type: disc;
+            margin-left: 20px;
+        }
+
+    .contact-info address {
+        font-style: normal;
+        margin-top: 10px;
+    }
+</style>
